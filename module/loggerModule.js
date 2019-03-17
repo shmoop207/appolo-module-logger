@@ -6,6 +6,7 @@ const logger_1 = require("./src/logger");
 let LoggerModule = class LoggerModule extends index_1.Module {
     constructor(opts) {
         super(opts);
+        this.Defaults = {};
     }
 };
 LoggerModule = tslib_1.__decorate([

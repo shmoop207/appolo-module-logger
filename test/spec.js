@@ -13,14 +13,14 @@ describe("socket module Spec", function () {
     afterEach(async () => {
         await app.reset();
     });
-    it("should write error", () => {
+    it("should write error", async () => {
         let logger = app.injector.getObject("logger");
         logger.error.should.be.ok;
         try {
             testStack();
         }
         catch (e) {
-            logger.error("test new", { e: e });
+            logger.error("test new", { e: e }, { a: 11 });
         }
     });
 });

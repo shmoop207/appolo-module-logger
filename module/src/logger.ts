@@ -1,79 +1,44 @@
 "use strict";
-import {define, injectParam, singleton} from 'appolo';
+import {define, inject, injectParam, singleton} from 'appolo';
 import {ILogger} from "./ILogger";
 import {IOptions} from "../../index";
 import {Util} from "./util";
-import Raven = require('raven');
+import {ITransport} from "./transports/ITransport";
+import {Level} from "./common/enums";
 
 
 @define()
 @singleton()
 export class Logger implements ILogger {
 
-    private readonly _logger: ILogger;
-    private static instance: ILogger;
-
-    constructor(@injectParam() private moduleOptions: IOptions) {
-
-        this._logger = Util.createLogger(moduleOptions.prettyInProduction);
-
-
-        if (this.moduleOptions.sentry) {
-            Raven.config(this.moduleOptions.sentry.dsn, this.moduleOptions.sentry.opts).install();
-        }
-
-        Logger.instance = this;
-    }
+    @inject() private transports: ITransport[];
 
     public info(msg: string, ...args: any[]): void {
-        this._logger.info.apply(this._logger, arguments);
+        this._log(Level.info, msg, args);
     }
 
     public debug(msg: string, ...args: any[]): void {
-        this._logger.debug.apply(this._logger, arguments);
+        this._log(Level.debug, msg, args);
     }
 
     public warn(msg: string, ...args: any[]): void {
-        this._logger.warn.apply(this._logger, arguments);
+        this._log(Level.warn, msg, args);
     }
 
     public error(msg: string, ...args: any[]): void {
 
-        Util.prepareArgs(args);
-
-        (this.moduleOptions.sentry) && (Util.wireToSentry(msg, args));
-
-        this._logger.error.apply(this._logger, arguments);
+        this._log(Level.error, msg, args);
     }
 
-    public fatal(msg: string, ...args: any[]): void {
 
-        Util.prepareArgs(arguments);
+    private _log(level: Level, msg: string, args: any[]) {
 
-        (this.moduleOptions.sentry) && Util.wireToSentry(msg, args);
+        args = Util.prepareArgs(args);
 
-
-        this._logger.fatal.apply(this._logger, arguments);
+        for (let i = 0; i < this.transports.length; i++) {
+            this.transports[i].log(level, msg, args)
+        }
     }
 
-    public static info(msg: string, ...args: any[]): void {
-        Logger.instance && Logger.instance.info.apply(Logger.instance, arguments)
-    }
-
-    public static debug(msg: string, ...args: any[]): void {
-        Logger.instance && Logger.instance.debug.apply(Logger.instance, arguments)
-    }
-
-    public static warn(msg: string, ...args: any[]): void {
-        Logger.instance && Logger.instance.warn.apply(Logger.instance, arguments)
-    }
-
-    public static error(msg: string, ...args: any[]): void {
-        Logger.instance && Logger.instance.error.apply(Logger.instance, arguments)
-    }
-
-    public static fatal(msg: string, ...args: any[]): void {
-        Logger.instance && Logger.instance.fatal.apply(Logger.instance, arguments)
-    }
 }
 

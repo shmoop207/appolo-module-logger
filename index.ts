@@ -3,14 +3,12 @@ import {Logger} from "./module/src/logger";
 import {LoggerModule} from "./module/loggerModule";
 import {ILogger} from "./module/src/ILogger";
 import {IModuleOptions} from "appolo";
-import Raven = require('raven');
+import {Level} from "./module/src/common/enums";
+import * as winston from "winston";
 
 export interface IOptions extends IModuleOptions {
-    sentry?: {
-        dsn?: string
-        opts?:Raven.ConstructorOptions
-    }
-    prettyInProduction?: boolean
+    level?: Level,
+    transports?: winston.transports.StreamTransportInstance[]
 }
 
 export {ILogger}  from "./module/src/ILogger"

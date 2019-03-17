@@ -5,5 +5,4 @@ export interface ILogger {
     info: LoggerFn
     debug: LoggerFn
     warn: LoggerFn
-    fatal: LoggerFn
 }

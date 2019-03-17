@@ -1,6 +1,6 @@
 {
   "name": "@appolo/logger",
-  "version": "0.0.14",
+  "version": "1.0.0",
   "description": "",
   "keywords": [
     "appolo",
@@ -11,19 +11,17 @@
     "access": "public"
   },
   "dependencies": {
-    "appolo": "^6.0.53",
+    "appolo": "^6.0.62",
+    "fast-safe-stringify": "^2.0.6",
     "lodash": "^4.17.11",
-    "pino": "^5.10.7",
-    "pino-pretty": "^2.5.0",
-    "raven": "^2.6.4"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/winston": "^2.4.4",
     "@types/chai": "^4.1.7",
     "@types/lodash": "^4.14.119",
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.18",
-    "@types/pino": "^5.8.3",
-    "@types/raven": "^2.5.1",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "typescript": "^3.2.2"

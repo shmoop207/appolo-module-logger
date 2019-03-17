@@ -1,5 +1,6 @@
-import {App, createApp} from 'appolo'
+import {App, createApp, Util} from 'appolo'
 import {Logger, LoggerModule} from "../";
+
 
 let should = require('chai').should();
 
@@ -22,16 +23,18 @@ describe("socket module Spec", function () {
         await app.reset();
     });
 
-    it("should write error", () => {
+    it("should write error", async () => {
+
 
         let logger = app.injector.getObject<Logger>("logger");
+
 
         logger.error.should.be.ok;
 
         try {
             testStack()
         } catch (e) {
-            logger.error("test new", {e: e})
+            logger.error("test new", {e: e}, {a: 11})
         }
     })
 

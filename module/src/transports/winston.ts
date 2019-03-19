@@ -1,6 +1,6 @@
 import _ = require("lodash");
 import {IOptions} from "../../../index";
-import {define, alias, singleton, inject} from 'appolo';
+import {define, alias, singleton, inject, App} from 'appolo';
 import {ITransport} from "./ITransport";
 import winston = require("winston");
 import {format} from "winston";
@@ -13,6 +13,7 @@ import  jsonStringify = require('fast-safe-stringify');
 export class Winston implements ITransport {
 
     private _logger: winston.Logger;
+    @inject() private app: App;
 
     @inject() private moduleOptions: IOptions;
 
@@ -28,15 +29,17 @@ export class Winston implements ITransport {
 
         let meta = jsonStringify.default(Object.assign({}, info, remove));
 
-        return `${info.timestamp} [${info.level}] ${info.message}${meta == '{}' ? "" : meta}`
+        meta = meta == '{}' ? "" : ` ${meta}`;
+
+        return `${info.timestamp} [${info.level}] ${info.message}${meta}`
     }
 
     public async initialize(): Promise<void> {
-        let isPod = process.env.NODE_ENV == "production";
+        let isProduction = process.env.NODE_ENV === "production" || this.app.env.name == "production" || this.app.env.type == "production";
 
         let transports = [new winston.transports.Console()].concat(this.moduleOptions.transports as any || []);
 
-        let formatOptions = isPod
+        let formatOptions = isProduction
             ? format.combine(format.timestamp(), format.printf(this._format))
             : format.combine(format.colorize(), format.timestamp(), format.printf(this._format));
 

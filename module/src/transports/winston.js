@@ -13,8 +13,8 @@ let Winston = class Winston {
         return true;
     }
     _format(info) {
-        let remove = { level: undefined, message: undefined, splat: undefined, timestamp: undefined };
-        let meta = jsonStringify.default(Object.assign({}, info, remove));
+        let splat = info[Symbol.for("splat")][0];
+        let meta = jsonStringify.default(splat);
         meta = meta == '{}' ? "" : ` ${meta}`;
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`;
     }
@@ -31,7 +31,7 @@ let Winston = class Winston {
         });
     }
     log(level, msg, args) {
-        this._logger[level].call(this._logger, msg, ...args);
+        this._logger[level].call(this._logger, msg, args);
     }
 };
 tslib_1.__decorate([

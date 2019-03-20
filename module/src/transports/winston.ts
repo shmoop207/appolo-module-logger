@@ -25,9 +25,9 @@ export class Winston implements ITransport {
 
     private _format(info): string {
 
-        let remove = {level: undefined, message: undefined, splat: undefined, timestamp: undefined};
+        let splat = info[Symbol.for("splat")][0];
 
-        let meta = jsonStringify.default(Object.assign({}, info, remove));
+        let meta = jsonStringify.default(splat);
 
         meta = meta == '{}' ? "" : ` ${meta}`;
 
@@ -52,7 +52,7 @@ export class Winston implements ITransport {
 
     public log(level: Level, msg: string, args: any[]) {
 
-        this._logger[level].call(this._logger, msg, ...args);
+        this._logger[level].call(this._logger, msg, args);
     }
 
 }

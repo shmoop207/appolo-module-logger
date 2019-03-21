@@ -1,6 +1,6 @@
 "use strict";
 import {define, inject, injectParam, singleton} from 'appolo';
-import {ILogger} from "./ILogger";
+import {ILogger, PlainObject} from "./ILogger";
 import {IOptions} from "../../index";
 import {Util} from "./util";
 import {ITransport} from "./transports/ITransport";
@@ -13,30 +13,30 @@ export class Logger implements ILogger {
 
     @inject() private transports: ITransport[];
 
-    public info(msg: string, ...args: any[]): void {
-        this._log(Level.info, msg, args);
+    public info(msg: string, meta?: PlainObject): void {
+        this._log(Level.info, msg, meta);
     }
 
-    public debug(msg: string, ...args: any[]): void {
-        this._log(Level.debug, msg, args);
+    public debug(msg: string, meta?: PlainObject): void {
+        this._log(Level.debug, msg, meta);
     }
 
-    public warn(msg: string, ...args: any[]): void {
-        this._log(Level.warn, msg, args);
+    public warn(msg: string, meta?: PlainObject): void {
+        this._log(Level.warn, msg, meta);
     }
 
-    public error(msg: string, ...args: any[]): void {
+    public error(msg: string, meta?: PlainObject): void {
 
-        this._log(Level.error, msg, args);
+        this._log(Level.error, msg, meta);
     }
 
 
-    private _log(level: Level, msg: string, args: any[]) {
+    private _log(level: Level, msg: string, meta: PlainObject) {
 
-        args = Util.prepareArgs(args);
+        meta = Util.prepareMeta(meta);
 
         for (let i = 0; i < this.transports.length; i++) {
-            this.transports[i].log(level, msg, args)
+            this.transports[i].log(level, msg, meta)
         }
     }
 

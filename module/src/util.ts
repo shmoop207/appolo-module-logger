@@ -22,39 +22,28 @@ export class Util {
         }
     }
 
-    public static prepareArgs(args: any): any {
+    public static prepareMeta(meta: object): any {
 
         let output = {};
 
-        for (let i = 0, len = args.length; i < len; i++) {
-            let arg = args[i];
+        if (!Util.isPlainObject(meta)) {
+            return output;
+        }
 
+        let keys = Object.keys(meta);
 
-            if (arg instanceof Error) {
-                output[i.toString()] = arg.stack || arg.toString();
-            } else if (_.isPlainObject(arg)) {
+        for (let i = 0, len = keys.length; i < len; i++) {
+            let key = keys[i], value = meta[key];
 
-
-                let keys = Object.keys(arg);
-                for (let j = 0, len2 = keys.length; j < len2; j++) {
-                    let key = keys[j], value = arg[key];
-
-                    if (value instanceof Error) {
-                        output[key] = value.stack || value.toString()
-                    } else {
-                        output[key] = value
-                    }
-                }
-            } else {
-                output[i.toString()] = arg;
-            }
+            output[key] = (value instanceof Error) ? value.stack || value.toString() : value;
         }
 
         return output;
     }
 
-
-
+    public static  isPlainObject = function (obj):boolean {
+        return Object.prototype.toString.call(obj) === '[object Object]';
+    };
 
 
 }

@@ -1,4 +1,7 @@
-type LoggerFn = (msg: string, ...args: any[]) => void;
+export type PlainObject = { [name: string]: any }
+
+
+type LoggerFn = (msg: string, meta?: PlainObject) => void;
 
 export interface ILogger {
     error: LoggerFn

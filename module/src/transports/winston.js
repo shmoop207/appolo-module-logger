@@ -14,7 +14,7 @@ let Winston = class Winston {
     }
     _format(info) {
         let splat = info[Symbol.for("splat")][0];
-        let meta = jsonStringify.default(splat);
+        let meta = jsonStringify.default(splat, null, 2);
         meta = meta == '{}' ? "" : ` ${meta}`;
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`;
     }

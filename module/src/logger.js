@@ -5,22 +5,22 @@ const appolo_1 = require("appolo");
 const util_1 = require("./util");
 const enums_1 = require("./common/enums");
 let Logger = class Logger {
-    info(msg, ...args) {
-        this._log(enums_1.Level.info, msg, args);
+    info(msg, meta) {
+        this._log(enums_1.Level.info, msg, meta);
     }
-    debug(msg, ...args) {
-        this._log(enums_1.Level.debug, msg, args);
+    debug(msg, meta) {
+        this._log(enums_1.Level.debug, msg, meta);
     }
-    warn(msg, ...args) {
-        this._log(enums_1.Level.warn, msg, args);
+    warn(msg, meta) {
+        this._log(enums_1.Level.warn, msg, meta);
     }
-    error(msg, ...args) {
-        this._log(enums_1.Level.error, msg, args);
+    error(msg, meta) {
+        this._log(enums_1.Level.error, msg, meta);
     }
-    _log(level, msg, args) {
-        args = util_1.Util.prepareArgs(args);
+    _log(level, msg, meta) {
+        meta = util_1.Util.prepareMeta(meta);
         for (let i = 0; i < this.transports.length; i++) {
-            this.transports[i].log(level, msg, args);
+            this.transports[i].log(level, msg, meta);
         }
     }
 };

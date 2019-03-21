@@ -6,6 +6,7 @@ import winston = require("winston");
 import {format} from "winston";
 import {Level} from "../common/enums";
 import  jsonStringify = require('fast-safe-stringify');
+import {PlainObject} from "../ILogger";
 
 @define()
 @alias("ITransport")
@@ -27,7 +28,7 @@ export class Winston implements ITransport {
 
         let splat = info[Symbol.for("splat")][0];
 
-        let meta = jsonStringify.default(splat);
+        let meta = jsonStringify.default(splat,null,2);
 
         meta = meta == '{}' ? "" : ` ${meta}`;
 
@@ -50,7 +51,7 @@ export class Winston implements ITransport {
         });
     }
 
-    public log(level: Level, msg: string, args: any[]) {
+    public log(level: Level, msg: string, args: PlainObject) {
 
         this._logger[level].call(this._logger, msg, args);
     }

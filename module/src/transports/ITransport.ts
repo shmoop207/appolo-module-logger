@@ -1,4 +1,5 @@
 import {Level} from "../common/enums";
+import {PlainObject} from "../ILogger";
 
 export interface ITransport {
 
@@ -6,5 +7,5 @@ export interface ITransport {
 
     initialize(): Promise<void>
 
-    log(level: Level, msg: string, args: any[])
+    log(level: Level, msg: string, args: PlainObject)
 }

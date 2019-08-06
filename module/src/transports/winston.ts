@@ -33,7 +33,7 @@ export class Winston implements ICustomTransport {
         if (splat) {
             splat = Util.prepareMeta(splat);
             meta = jsonStringify.default(splat, null, 0);
-            meta = meta == '{}' ? "" : `${meta}`;
+            meta = meta == '{}' ? "" : ` ${meta}`;
         }
 
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`

@@ -19,7 +19,7 @@ let Winston = class Winston {
         if (splat) {
             splat = util_1.Util.prepareMeta(splat);
             meta = jsonStringify.default(splat, null, 0);
-            meta = meta == '{}' ? "" : `${meta}`;
+            meta = meta == '{}' ? "" : ` ${meta}`;
         }
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`;
     }

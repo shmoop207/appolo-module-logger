@@ -3,7 +3,7 @@ import {define, inject, injectParam, singleton} from 'appolo';
 import {ILogger, PlainObject} from "./ILogger";
 import {IOptions} from "../../index";
 import {Util} from "./util";
-import {ITransport} from "./transports/ITransport";
+import {ICustomTransport} from "./transports/ICustomTransport";
 import {Level} from "./common/enums";
 
 
@@ -11,7 +11,7 @@ import {Level} from "./common/enums";
 @singleton()
 export class Logger implements ILogger {
 
-    @inject() private transports: ITransport[];
+    @inject() private transports: ICustomTransport[];
 
     public info(msg: string, meta?: PlainObject): void {
         this._log(Level.info, msg, meta);
@@ -32,8 +32,6 @@ export class Logger implements ILogger {
 
 
     private _log(level: Level, msg: string, meta: PlainObject) {
-
-        meta = Util.prepareMeta(meta);
 
         for (let i = 0; i < this.transports.length; i++) {
             this.transports[i].log(level, msg, meta)

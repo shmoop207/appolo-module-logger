@@ -1,6 +1,6 @@
 {
   "name": "@appolo/logger",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "keywords": [
     "appolo",
@@ -13,7 +13,6 @@
   "dependencies": {
     "appolo": "^6.0.62",
     "fast-safe-stringify": "^2.0.6",
-    "lodash": "^4.17.11",
     "winston": "^3.2.1"
   },
   "devDependencies": {

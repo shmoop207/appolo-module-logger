@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Util {
-    static prepareStack() {
+    static prepareStack(deleteCount = 0) {
         let old = Error.prepareStackTrace;
         Error.prepareStackTrace = (err, stackTraces) => {
             Error.prepareStackTrace = old;
-            stackTraces.splice(0, 3);
+            stackTraces.splice(0, deleteCount);
             let lines = [];
             lines.push(err.toString());
             for (let i = 0, len = stackTraces.length; i < len; i++) {

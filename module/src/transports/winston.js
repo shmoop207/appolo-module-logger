@@ -5,6 +5,7 @@ const appolo_1 = require("appolo");
 const winston = require("winston");
 const winston_1 = require("winston");
 const jsonStringify = require("fast-safe-stringify");
+const util_1 = require("../util");
 let Winston = class Winston {
     constructor() {
         this.DEFAULTS = {};
@@ -14,8 +15,12 @@ let Winston = class Winston {
     }
     _format(info) {
         let splat = info[Symbol.for("splat")][0];
-        let meta = jsonStringify.default(splat, null, 2);
-        meta = meta == '{}' ? "" : ` ${meta}`;
+        let meta = "";
+        if (splat) {
+            splat = util_1.Util.prepareMeta(splat);
+            meta = jsonStringify.default(splat, null, 0);
+            meta = meta == '{}' ? "" : `${meta}`;
+        }
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`;
     }
     async initialize() {
@@ -42,7 +47,7 @@ tslib_1.__decorate([
 ], Winston.prototype, "moduleOptions", void 0);
 Winston = tslib_1.__decorate([
     appolo_1.define(),
-    appolo_1.alias("ITransport"),
+    appolo_1.alias("ICustomTransport"),
     appolo_1.singleton()
 ], Winston);
 exports.Winston = Winston;

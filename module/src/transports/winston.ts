@@ -1,17 +1,17 @@
-import _ = require("lodash");
 import {IOptions} from "../../../index";
 import {define, alias, singleton, inject, App} from 'appolo';
-import {ITransport} from "./ITransport";
+import {ICustomTransport} from "./ICustomTransport";
 import winston = require("winston");
 import {format} from "winston";
 import {Level} from "../common/enums";
 import  jsonStringify = require('fast-safe-stringify');
 import {PlainObject} from "../ILogger";
+import {Util} from "../util";
 
 @define()
-@alias("ITransport")
+@alias("ICustomTransport")
 @singleton()
-export class Winston implements ITransport {
+export class Winston implements ICustomTransport {
 
     private _logger: winston.Logger;
     @inject() private app: App;
@@ -28,9 +28,13 @@ export class Winston implements ITransport {
 
         let splat = info[Symbol.for("splat")][0];
 
-        let meta = jsonStringify.default(splat,null,2);
+        let meta = "";
 
-        meta = meta == '{}' ? "" : ` ${meta}`;
+        if (splat) {
+            splat = Util.prepareMeta(splat);
+            meta = jsonStringify.default(splat, null, 0);
+            meta = meta == '{}' ? "" : `${meta}`;
+        }
 
         return `${info.timestamp} [${info.level}] ${info.message}${meta}`
     }

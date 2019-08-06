@@ -1,9 +1,7 @@
 import {Level} from "../common/enums";
 import {PlainObject} from "../ILogger";
 
-export interface ITransport {
-
-    isSupported(): boolean
+export interface ICustomTransport {
 
     initialize(): Promise<void>
 

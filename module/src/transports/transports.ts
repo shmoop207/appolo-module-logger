@@ -1,22 +1,17 @@
-import {define, aliasFactory, singleton, injectAlias, factory} from 'appolo';
-import {ITransport} from "./ITransport";
-import _ = require('lodash');
+import {define, aliasFactory, singleton, injectAlias, factory, inject} from 'appolo';
+import {ICustomTransport} from "./ICustomTransport";
+import {IOptions} from "../../../index";
 
 @define()
 @singleton()
 @factory()
 export class Transports {
-    @injectAlias("ITransport") transports: ITransport[];
+    @injectAlias("ICustomTransport") transports: ICustomTransport[];
+    @inject() moduleOptions: IOptions;
 
     public async get() {
 
-        let transports = [];
-
-        _.forEach(this.transports, transport => {
-            if (transport.isSupported()) {
-                transports.push(transport);
-            }
-        });
+        let transports = [].concat(this.moduleOptions.customTransports || [], this.transports);
 
         await Promise.all(transports.map(transport => transport.initialize()));
 

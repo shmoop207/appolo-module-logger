@@ -1,13 +1,12 @@
-import _ = require('lodash');
 
 export class Util {
-    public static prepareStack() {
+    public static prepareStack(deleteCount = 0) {
         let old = Error.prepareStackTrace;
 
         Error.prepareStackTrace = (err: Error, stackTraces: NodeJS.CallSite[]) => {
 
             Error.prepareStackTrace = old;
-            stackTraces.splice(0, 3);
+            stackTraces.splice(0, deleteCount);
 
             let lines = [];
 
@@ -41,7 +40,7 @@ export class Util {
         return output;
     }
 
-    public static  isPlainObject = function (obj):boolean {
+    public static isPlainObject = function (obj): boolean {
         return Object.prototype.toString.call(obj) === '[object Object]';
     };
 

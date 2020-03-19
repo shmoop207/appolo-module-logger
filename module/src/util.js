@@ -27,8 +27,8 @@ class Util {
         return output;
     }
 }
+exports.Util = Util;
 Util.isPlainObject = function (obj) {
     return Object.prototype.toString.call(obj) === '[object Object]';
 };
-exports.Util = Util;
 //# sourceMappingURL=util.js.map

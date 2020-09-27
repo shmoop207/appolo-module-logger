@@ -1,4 +1,4 @@
-import {define, aliasFactory, singleton, injectAlias, factory, inject} from 'appolo';
+import {define, aliasFactory, singleton, injectAlias, factory, inject} from '@appolo/inject';
 import {ICustomTransport} from "./ICustomTransport";
 import {IOptions} from "../../../index";
 

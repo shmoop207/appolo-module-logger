@@ -1,8 +1,8 @@
 import {IOptions} from "../../../index";
-import {define, alias, singleton, inject, App} from 'appolo';
+import {define, alias, singleton, inject} from '@appolo/inject';
+import {App} from '@appolo/engine';
 import {ICustomTransport} from "./ICustomTransport";
-import winston = require("winston");
-import {format} from "winston";
+import pino = require("pino");
 import {Level} from "../common/enums";
 import  jsonStringify = require('fast-safe-stringify');
 import {PlainObject} from "../ILogger";
@@ -11,9 +11,9 @@ import {Util} from "../util";
 @define()
 @alias("ICustomTransport")
 @singleton()
-export class Winston implements ICustomTransport {
+export class Pino implements ICustomTransport {
 
-    private _logger: winston.Logger;
+    private _logger: pino.Logger;
     @inject() private app: App;
 
     @inject() private moduleOptions: IOptions;
@@ -24,10 +24,7 @@ export class Winston implements ICustomTransport {
         return true;
     }
 
-    private _format(info): string {
-
-        let splat = info[Symbol.for("splat")][0];
-
+    private _format(splat: PlainObject): string {
         let meta = "";
 
         if (splat) {
@@ -36,28 +33,24 @@ export class Winston implements ICustomTransport {
             meta = meta == '{}' ? "" : ` ${meta}`;
         }
 
-        return `${info.timestamp} [${info.level}] ${info.message}${meta}`
+        return meta
     }
 
     public async initialize(): Promise<void> {
         let isProduction = process.env.NODE_ENV === "production" || this.app.env.name == "production" || this.app.env.type == "production";
 
-        let transports = [new winston.transports.Console()].concat(this.moduleOptions.transports as any || []);
-
-        let formatOptions = isProduction
-            ? format.combine(format.timestamp(), format.printf(this._format))
-            : format.combine(format.colorize(), format.timestamp(), format.printf(this._format));
-
-        this._logger = winston.createLogger({
-            transports: transports,
-            format: formatOptions,
-            level: this.moduleOptions.level || "silly"
+        this._logger = pino({
+            prettyPrint: {
+                colorize: !isProduction,
+                levelFirst: false,
+                translateTime: true, ignore: 'pid,hostname'
+            },
         });
     }
 
     public log(level: Level, msg: string, args: PlainObject) {
 
-        this._logger[level].call(this._logger, msg, args);
+        this._logger[level].call(this._logger, msg + this._format(args));
     }
 
 }

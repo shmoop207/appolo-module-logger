@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const appolo_1 = require("appolo");
+const core_1 = require("@appolo/core");
 const __1 = require("../");
 let should = require('chai').should();
 describe("socket module Spec", function () {
     let app;
     beforeEach(async () => {
-        app = appolo_1.createApp({ root: __dirname + "/mock", environment: "production", port: 8182 });
-        await app.module(new __1.LoggerModule());
+        app = core_1.createApp({ root: __dirname + "/mock", environment: "production", port: 8182 });
+        await app.module(__1.LoggerModule);
         await app.launch();
     });
     afterEach(async () => {
@@ -20,7 +20,7 @@ describe("socket module Spec", function () {
             testStack();
         }
         catch (e) {
-            logger.error("test new", { e, a: 11 });
+            logger.error("test new", { e, a: 11 }, 1);
         }
     });
 });

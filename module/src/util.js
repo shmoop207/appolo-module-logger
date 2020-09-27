@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Util = void 0;
 class Util {
     static prepareStack(deleteCount = 0) {
         let old = Error.prepareStackTrace;

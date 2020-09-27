@@ -1,4 +1,4 @@
-import {Module, module} from "appolo/index";
+import {Module, module, IModuleParams, IModuleOptions} from "@appolo/engine";
 import {Logger} from "./src/logger";
 import {IOptions} from "../index";
 
@@ -8,11 +8,7 @@ export class LoggerModule extends Module<IOptions> {
 
     protected readonly Defaults: Partial<IOptions> = {};
 
-    constructor(opts?: IOptions) {
-        super(opts);
-    }
-
-    public static for(opts?: IOptions): LoggerModule {
-        return new LoggerModule(opts)
+    public static for(options: IOptions, moduleOptions: IModuleOptions = {}): IModuleParams {
+        return {module: LoggerModule, options, moduleOptions}
     }
 }

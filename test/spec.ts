@@ -1,4 +1,4 @@
-import {App, createApp, Util} from 'appolo'
+import {App, createApp} from '@appolo/core'
 import {Logger, LoggerModule} from "../";
 
 
@@ -18,7 +18,7 @@ describe("socket module Spec", function () {
 
         app = createApp({root: __dirname + "/mock", environment: "production", port: 8182});
 
-        await app.module(new LoggerModule());
+        await app.module(LoggerModule);
 
         await app.launch();
 
@@ -39,7 +39,7 @@ describe("socket module Spec", function () {
         try {
             testStack()
         } catch (e) {
-            logger.error("test new", {e,a: 11})
+            logger.error("test new", {e,a: 11},1)
         }
     })
 

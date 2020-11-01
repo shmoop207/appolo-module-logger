@@ -1,4 +1,4 @@
-import {define, aliasFactory, singleton, injectAlias, factory, inject} from '@appolo/inject';
+import {define, aliasFactory, singleton, alias, factory, inject} from '@appolo/inject';
 import {ICustomTransport} from "./ICustomTransport";
 import {IOptions} from "../../../index";
 
@@ -6,7 +6,7 @@ import {IOptions} from "../../../index";
 @singleton()
 @factory()
 export class Transports {
-    @injectAlias("ICustomTransport") transports: ICustomTransport[];
+    @alias("ICustomTransport") transports: ICustomTransport[];
     @inject() moduleOptions: IOptions;
 
     public async get() {

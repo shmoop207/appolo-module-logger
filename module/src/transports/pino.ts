@@ -37,7 +37,7 @@ export class Pino implements ICustomTransport {
     }
 
     public async initialize(): Promise<void> {
-        let isProduction = process.env.NODE_ENV === "production" || this.app.env.name == "production" || this.app.env.type == "production";
+        let isProduction = process.env.NODE_ENV === "production" || (this.app.env as any).name == "production" || this.app.env.type == "production";
 
         this._logger = pino({
             prettyPrint: {

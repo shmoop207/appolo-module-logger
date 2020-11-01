@@ -5,7 +5,6 @@ import {Logger, LoggerModule} from "../";
 let should = require('chai').should();
 
 
-
 describe("socket module Spec", function () {
 
     let app: App;
@@ -13,12 +12,9 @@ describe("socket module Spec", function () {
     beforeEach(async () => {
 
 
-
-
-
         app = createApp({root: __dirname + "/mock", environment: "production", port: 8182});
 
-        await app.module(LoggerModule);
+        await app.module.load(LoggerModule);
 
         await app.launch();
 
@@ -39,7 +35,7 @@ describe("socket module Spec", function () {
         try {
             testStack()
         } catch (e) {
-            logger.error("test new", {e,a: 11},1)
+            logger.error("test new", {e, a: 11}, {random: 1})
         }
     })
 

@@ -10,12 +10,12 @@ let LoggerModule = LoggerModule_1 = class LoggerModule extends engine_1.Module {
         super(...arguments);
         this.Defaults = {};
     }
-    static for(options, moduleOptions = {}) {
-        return { module: LoggerModule_1, options, moduleOptions };
+    static for(options) {
+        return { type: LoggerModule_1, options };
     }
 };
 LoggerModule = LoggerModule_1 = tslib_1.__decorate([
-    engine_1.module({ exports: [logger_1.Logger], immediate: true })
+    engine_1.module({ exports: [logger_1.Logger] })
 ], LoggerModule);
 exports.LoggerModule = LoggerModule;
 //# sourceMappingURL=loggerModule.js.map

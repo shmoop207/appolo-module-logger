@@ -11,7 +11,7 @@ let Transports = class Transports {
     }
 };
 tslib_1.__decorate([
-    inject_1.injectAlias("ICustomTransport")
+    inject_1.alias("ICustomTransport")
 ], Transports.prototype, "transports", void 0);
 tslib_1.__decorate([
     inject_1.inject()

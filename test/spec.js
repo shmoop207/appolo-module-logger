@@ -7,7 +7,7 @@ describe("socket module Spec", function () {
     let app;
     beforeEach(async () => {
         app = core_1.createApp({ root: __dirname + "/mock", environment: "production", port: 8182 });
-        await app.module(__1.LoggerModule);
+        await app.module.load(__1.LoggerModule);
         await app.launch();
     });
     afterEach(async () => {
@@ -20,7 +20,7 @@ describe("socket module Spec", function () {
             testStack();
         }
         catch (e) {
-            logger.error("test new", { e, a: 11 }, 1);
+            logger.error("test new", { e, a: 11 }, { random: 1 });
         }
     });
 });

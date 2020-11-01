@@ -11,7 +11,7 @@ export class Transports {
 
     public async get() {
 
-        let transports = [].concat(this.moduleOptions.customTransports || [], this.transports);
+        let transports = [].concat(this.moduleOptions.transports || [], this.transports);
 
         await Promise.all(transports.map(transport => transport.initialize()));
 

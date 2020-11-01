@@ -5,7 +5,7 @@ const tslib_1 = require("tslib");
 const inject_1 = require("@appolo/inject");
 let Transports = class Transports {
     async get() {
-        let transports = [].concat(this.moduleOptions.customTransports || [], this.transports);
+        let transports = [].concat(this.moduleOptions.transports || [], this.transports);
         await Promise.all(transports.map(transport => transport.initialize()));
         return transports;
     }

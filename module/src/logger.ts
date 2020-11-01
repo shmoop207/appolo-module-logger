@@ -12,27 +12,27 @@ export class Logger implements ILogger {
 
     @inject() private transports: ICustomTransport[];
 
-    public info(msg: string, meta?: PlainObject, random?: number): void {
-        this._log(Level.info, msg, meta, random);
+    public info(msg: string, meta?: PlainObject, options?:{ random?: number }): void {
+        this._log(Level.info, msg, meta, options);
     }
 
-    public debug(msg: string, meta?: PlainObject, random?: number): void {
-        this._log(Level.debug, msg, meta, random);
+    public debug(msg: string, meta?: PlainObject, options?:{ random?: number }): void {
+        this._log(Level.debug, msg, meta, options);
     }
 
-    public warn(msg: string, meta?: PlainObject, random?: number): void {
-        this._log(Level.warn, msg, meta, random);
+    public warn(msg: string, meta?: PlainObject,  options?:{ random?: number }): void {
+        this._log(Level.warn, msg, meta, options);
     }
 
-    public error(msg: string, meta?: PlainObject, random?: number): void {
+    public error(msg: string, meta?: PlainObject,  options?:{ random?: number }): void {
 
-        this._log(Level.error, msg, meta,random);
+        this._log(Level.error, msg, meta, options);
     }
 
 
-    private _log(level: Level, msg: string, meta: PlainObject, random?: number) {
+    private _log(level: Level, msg: string, meta: PlainObject, options: { random?: number }={}) {
 
-        if (random && !Numbers.isValidRandom(random)) {
+        if (options && options.random && !Numbers.isValidRandom(options.random)) {
             return;
         }
         for (let i = 0; i < this.transports.length; i++) {

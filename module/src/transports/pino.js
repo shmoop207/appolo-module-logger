@@ -28,7 +28,8 @@ let Pino = class Pino {
             prettyPrint: {
                 colorize: !isProduction,
                 levelFirst: false,
-                translateTime: true, ignore: 'pid,hostname'
+                // messageFormat:'[{levelLabel}] {msg}',
+                translateTime: "yyyy-mm-dd HH:MM:ss.l", ignore: 'pid,hostname'
             },
         });
     }

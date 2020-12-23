@@ -1,4 +1,4 @@
-import {App, createApp} from '@appolo/core'
+import {App, createApp} from '@appolo/engine'
 import {Logger, LoggerModule} from "../";
 
 
@@ -12,7 +12,7 @@ describe("socket module Spec", function () {
     beforeEach(async () => {
 
 
-        app = createApp({root: __dirname + "/mock", environment: "production", port: 8182});
+        app = createApp({root: __dirname + "/mock", environment: "development"});
 
         await app.module.load(LoggerModule);
 

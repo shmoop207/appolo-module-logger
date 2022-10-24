@@ -6,11 +6,21 @@ import {ICustomTransport} from "./transports/ICustomTransport";
 import {Level} from "./common/enums";
 
 
+export interface ILoggerParams {
+    level: Level,
+    msg: string,
+    meta: PlainObject,
+    options: ILoggerMsgOptions
+}
+
+
 @define()
 @singleton()
 export class Logger implements ILogger {
 
     @inject() private transports: ICustomTransport[];
+
+    private _transform: (params: ILoggerParams) => ILoggerParams
 
     public info(msg: string, meta?: PlainObject, options?: ILoggerMsgOptions): void {
         this._log(Level.info, msg, meta, options);
@@ -30,14 +40,26 @@ export class Logger implements ILogger {
     }
 
 
-    protected transform(level: Level, msg: string, meta: PlainObject, options: ILoggerMsgOptions = {}) {
+    public setTransform(fn: (params: ILoggerParams) => ILoggerParams) {
 
-        return {level, msg, meta, options}
+        this._transform = fn;
+    }
+
+    public clone(): ILogger {
+        let logger = new Logger()
+        logger.transports = this.transports;
+        logger._transform = this._transform;
+
+        return logger;
+
     }
 
     protected _log(level: Level, msg: string, meta: PlainObject, options: ILoggerMsgOptions = {}) {
 
-        ({level, msg, meta, options} =  this.transform(level, msg, meta, options));
+        if (this._transform) {
+            ({level, msg, meta, options} = this._transform({level, msg, meta, options}));
+        }
+
 
         if (options && options.random && !Numbers.isValidRandom(options.random)) {
             return;

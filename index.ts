@@ -11,6 +11,7 @@ export interface IOptions {
     transports?: ICustomTransport[]
 }
 
-export {ILogger}  from "./module/src/ILogger"
+export {ILogger, PlainObject, ILoggerMsgOptions} from "./module/src/ILogger"
+export {Level} from "./module/src/common/enums"
 export {Logger, LoggerModule, ICustomTransport, Util}
 

@@ -20,7 +20,7 @@ describe("socket module Spec", function () {
             testStack();
         }
         catch (e) {
-            logger.error("test new", { err:e, a: 11 }, { random: 1 });
+            logger.error("test new", { e, a: 11 }, { random: 1 });
         }
     });
 });

@@ -1,17 +1,12 @@
 "use strict";
 import {define, inject, singleton} from '@appolo/inject';
-import {ILogger, ILoggerMsgOptions, PlainObject} from "./ILogger";
+import {ILogger, ILoggerMsgOptions, ILoggerParams, PlainObject} from "./ILogger";
 import {Numbers} from "@appolo/utils";
 import {ICustomTransport} from "./transports/ICustomTransport";
 import {Level} from "./common/enums";
 
 
-export interface ILoggerParams {
-    level: Level,
-    msg: string,
-    meta: PlainObject,
-    options: ILoggerMsgOptions
-}
+
 
 
 @define()

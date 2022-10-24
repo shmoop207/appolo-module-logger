@@ -11,15 +11,15 @@ let Transports = class Transports {
     }
 };
 tslib_1.__decorate([
-    inject_1.alias("ICustomTransport")
+    (0, inject_1.alias)("ICustomTransport")
 ], Transports.prototype, "transports", void 0);
 tslib_1.__decorate([
-    inject_1.inject()
+    (0, inject_1.inject)()
 ], Transports.prototype, "moduleOptions", void 0);
 Transports = tslib_1.__decorate([
-    inject_1.define(),
-    inject_1.singleton(),
-    inject_1.factory()
+    (0, inject_1.define)(),
+    (0, inject_1.singleton)(),
+    (0, inject_1.factory)()
 ], Transports);
 exports.Transports = Transports;
 //# sourceMappingURL=transports.js.map

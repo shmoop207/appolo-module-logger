@@ -12,25 +12,32 @@ export class Logger implements ILogger {
 
     @inject() private transports: ICustomTransport[];
 
-    public info(msg: string, meta?: PlainObject, options?:ILoggerMsgOptions): void {
+    public info(msg: string, meta?: PlainObject, options?: ILoggerMsgOptions): void {
         this._log(Level.info, msg, meta, options);
     }
 
-    public debug(msg: string, meta?: PlainObject, options?:ILoggerMsgOptions): void {
+    public debug(msg: string, meta?: PlainObject, options?: ILoggerMsgOptions): void {
         this._log(Level.debug, msg, meta, options);
     }
 
-    public warn(msg: string, meta?: PlainObject,  options?:ILoggerMsgOptions): void {
+    public warn(msg: string, meta?: PlainObject, options?: ILoggerMsgOptions): void {
         this._log(Level.warn, msg, meta, options);
     }
 
-    public error(msg: string, meta?: PlainObject,  options?:ILoggerMsgOptions): void {
+    public error(msg: string, meta?: PlainObject, options?: ILoggerMsgOptions): void {
 
         this._log(Level.error, msg, meta, options);
     }
 
 
-    private _log(level: Level, msg: string, meta: PlainObject, options: ILoggerMsgOptions={}) {
+    protected transform(level: Level, msg: string, meta: PlainObject, options: ILoggerMsgOptions = {}) {
+
+        return {level, msg, meta, options}
+    }
+
+    protected _log(level: Level, msg: string, meta: PlainObject, options: ILoggerMsgOptions = {}) {
+
+        ({level, msg, meta, options} =  this.transform(level, msg, meta, options));
 
         if (options && options.random && !Numbers.isValidRandom(options.random)) {
             return;

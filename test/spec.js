@@ -6,7 +6,7 @@ let should = require('chai').should();
 describe("socket module Spec", function () {
     let app;
     beforeEach(async () => {
-        app = engine_1.createApp({ root: __dirname + "/mock", environment: "development" });
+        app = (0, engine_1.createApp)({ root: __dirname + "/mock", environment: "development" });
         await app.module.load(__1.LoggerModule);
         await app.launch();
     });
@@ -20,7 +20,7 @@ describe("socket module Spec", function () {
             testStack();
         }
         catch (e) {
-            logger.error("test new", { e, a: 11 }, { random: 1 });
+            logger.error("test new", { err:e, a: 11 }, { random: 1 });
         }
     });
 });

@@ -2,9 +2,10 @@ import {IOptions} from "../../../index";
 import {define, alias, singleton, inject} from '@appolo/inject';
 import {App} from '@appolo/engine';
 import {ICustomTransport} from "./ICustomTransport";
-import pino = require("pino");
+import pino from "pino" ;
+import pretty from 'pino-pretty'
 import {Level} from "../common/enums";
-import  jsonStringify = require('fast-safe-stringify');
+import jsonStringify from 'fast-safe-stringify';
 import {PlainObject} from "../ILogger";
 import {Util} from "../util";
 
@@ -29,8 +30,13 @@ export class Pino implements ICustomTransport {
 
         if (splat) {
             splat = Util.prepareMeta(splat);
-            meta = jsonStringify.default(splat, null, 0);
-            meta = meta == '{}' ? "" : ` ${meta}`;
+
+            try {
+                meta = jsonStringify(splat, null, 0);
+                meta = meta == '{}' ? "" : ` ${meta}`;
+            } catch (e) {
+
+            }
         }
 
         return meta
@@ -39,14 +45,14 @@ export class Pino implements ICustomTransport {
     public async initialize(): Promise<void> {
         let isProduction = process.env.NODE_ENV === "production" || (this.app.env as any).name == "production" || this.app.env.type == "production";
 
-        this._logger = pino({
-            prettyPrint: {
+        this._logger = pino(pretty({
                 colorize: !isProduction,
                 levelFirst: false,
-               // messageFormat:'[{levelLabel}] {msg}',
                 translateTime: "yyyy-mm-dd HH:MM:ss.l", ignore: 'pid,hostname'
-            },
-        });
+
+            }
+        ))
+
     }
 
     public log(level: Level, msg: string, args: PlainObject) {

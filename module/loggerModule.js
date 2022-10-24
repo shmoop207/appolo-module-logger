@@ -15,7 +15,7 @@ let LoggerModule = LoggerModule_1 = class LoggerModule extends engine_1.Module {
     }
 };
 LoggerModule = LoggerModule_1 = tslib_1.__decorate([
-    engine_1.module({ exports: [logger_1.Logger] })
+    (0, engine_1.module)({ exports: [logger_1.Logger] })
 ], LoggerModule);
 exports.LoggerModule = LoggerModule;
 //# sourceMappingURL=loggerModule.js.map

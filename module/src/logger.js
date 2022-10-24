@@ -18,7 +18,11 @@ let Logger = class Logger {
     error(msg, meta, options) {
         this._log(enums_1.Level.error, msg, meta, options);
     }
+    transform(level, msg, meta, options = {}) {
+        return { level, msg, meta, options };
+    }
     _log(level, msg, meta, options = {}) {
+        ({ level, msg, meta, options } = this.transform(level, msg, meta, options));
         if (options && options.random && !utils_1.Numbers.isValidRandom(options.random)) {
             return;
         }
@@ -28,11 +32,11 @@ let Logger = class Logger {
     }
 };
 tslib_1.__decorate([
-    inject_1.inject()
+    (0, inject_1.inject)()
 ], Logger.prototype, "transports", void 0);
 Logger = tslib_1.__decorate([
-    inject_1.define(),
-    inject_1.singleton()
+    (0, inject_1.define)(),
+    (0, inject_1.singleton)()
 ], Logger);
 exports.Logger = Logger;
 //# sourceMappingURL=logger.js.map
